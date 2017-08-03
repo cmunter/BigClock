@@ -1,0 +1,196 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chrtistianmunter.bigclock.FullscreenActivity"
+    android:background="@color/colorPrimaryDark"
+    android:fitsSystemWindows="true"
+    android:keepScreenOn="true"
+    android:id="@+id/fullscreen_content"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <Button
+            android:id="@+id/hour_enable_button"
+            android:text="HH"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/colorAccent"
+            />
+
+        <Button
+            android:id="@+id/minutes_enable_button"
+            android:text="MM"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/unit_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_more_vert_24dp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+        android:id="@+id/unit_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_more_vert_24dp"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:visibility="gone"
+        />
+
+    <RelativeLayout
+        android:id="@+id/main_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="-300dp"
+        >
+
+        <com.robinhood.ticker.TickerView
+            android:id="@+id/time_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="268dp"
+            app:ticker_animationDuration="2000"
+            android:text="23"
+            android:fontFamily="sans-serif-condensed"
+            />
+
+        <TextView
+            android:id="@+id/temp_unit_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="°C"
+            android:textSize="120dp"
+            android:textColor="@color/colorAccent"
+            android:layout_toEndOf="@id/time_view"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-condensed"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dot_hour_container"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="-10dp"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clock_dot"
+            android:layout_marginBottom="48dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clock_dot"
+            android:layout_marginTop="48dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dot_minutes_container"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="-10dp"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clock_dot"
+            android:layout_marginBottom="48dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clock_dot"
+            android:layout_marginTop="48dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weather_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        >
+
+        <TextView
+            android:id="@+id/weather_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/colorAccent"
+            android:textSize="120dp" />
+
+        <TextView
+            android:id="@+id/weather_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/colorAccent"
+            android:textSize="48dp"
+            />
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:tint="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
