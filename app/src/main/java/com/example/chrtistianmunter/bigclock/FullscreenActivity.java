@@ -381,7 +381,16 @@ public class FullscreenActivity extends AppCompatActivity {
                 String minuteMinorValue =  String.valueOf(timeValue).substring(1,2);
                 timeView.setText(minuteMinorValue, true);
             }
+
         }
+    }
+
+    private int testTime = 0;
+
+    private void testSetTimeView() {
+        String minuteMinorValue =  String.valueOf(testTime);
+        timeView.setText(minuteMinorValue, true);
+        testTime++;
     }
 
 }
