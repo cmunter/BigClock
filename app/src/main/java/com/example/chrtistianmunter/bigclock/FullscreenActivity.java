@@ -54,7 +54,12 @@ public class FullscreenActivity extends AppCompatActivity {
     private LinearLayout dotLayout;
 
     private BroadcastReceiver timeTickerReceiver;
-    private boolean isHours = true;
+
+    private enum TimeUnit {
+        HOUR_MAJOR, HOUR_MINOR, MINUTES_MAJOR, MINUTES_MINOR
+    }
+    private TimeUnit timeUnit = TimeUnit.HOUR_MAJOR;
+
     private boolean isTimeShown = true;
 
     private final Handler mHideHandler = new Handler();
@@ -91,51 +96,72 @@ public class FullscreenActivity extends AppCompatActivity {
         weatherDescriptionView = findViewById(R.id.weather_description);
         initDotContainer();
 
-        final Button hourEnableButton = findViewById(R.id.hour_enable_button);
-        final Button minuteEnableButton = findViewById(R.id.minutes_enable_button);
+        final Button hourMajorEnableButton = findViewById(R.id.hour_major_enable_button);
+        final Button hourMinorEnableButton = findViewById(R.id.hour_minor_enable_button);
+        final Button minuteMajorEnableButton = findViewById(R.id.minutes_major_enable_button);
+        final Button minuteMinorEnableButton = findViewById(R.id.minutes_minor_enable_button);
 
-        hourEnableButton.setOnClickListener(new View.OnClickListener() {
+        hourMajorEnableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                minuteEnableButton.setAlpha(0.5f);
-                hourEnableButton.setAlpha(1);
+                timeUnit = TimeUnit.HOUR_MAJOR;
 
-                isHours = true;
+                hourMajorEnableButton.setAlpha(1);
+                hourMinorEnableButton.setAlpha(0.5f);
+                minuteMajorEnableButton.setAlpha(0.5f);
+                minuteMinorEnableButton.setAlpha(0.5f);
+
                 setTimeView();
                 initDotContainer();
             }
         });
 
-        minuteEnableButton.setOnClickListener(new View.OnClickListener() {
+        hourMinorEnableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                minuteEnableButton.setAlpha(1f);
-                hourEnableButton.setAlpha(0.5f);
+                timeUnit = TimeUnit.HOUR_MINOR;
 
-                isHours = false;
+                hourMajorEnableButton.setAlpha(0.5f);
+                hourMinorEnableButton.setAlpha(1f);
+                minuteMajorEnableButton.setAlpha(0.5f);
+                minuteMinorEnableButton.setAlpha(0.5f);
+
                 setTimeView();
                 initDotContainer();
             }
         });
 
-        ImageButton unitSelector = findViewById(R.id.unit_selector);
-        ImageButton unitTest = findViewById(R.id.unit_test);
+        minuteMajorEnableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeUnit = TimeUnit.MINUTES_MAJOR;
+
+                hourMajorEnableButton.setAlpha(0.5f);
+                hourMinorEnableButton.setAlpha(0.5f);
+                minuteMajorEnableButton.setAlpha(1f);
+                minuteMinorEnableButton.setAlpha(0.5f);
+
+                setTimeView();
+                initDotContainer();
+            }
+        });
+
+        minuteMinorEnableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeUnit = TimeUnit.MINUTES_MINOR;
+
+                hourMajorEnableButton.setAlpha(0.5f);
+                hourMinorEnableButton.setAlpha(0.5f);
+                minuteMajorEnableButton.setAlpha(0.5f);
+                minuteMinorEnableButton.setAlpha(1f);
+
+                setTimeView();
+                initDotContainer();
+            }
+        });
 
         timeView.setCharacterList(TickerUtils.getDefaultNumberList());
-        int hours = LocalTime.now().getHour();
-        timeView.setText(String.valueOf(hours));
-
-
-//        unitSelector.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isHours = !isHours;
-//                setTimeView();
-//                initDotContainer();
-//            }
-//        });
-
-
 
         timeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +171,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 if(isTimeShown) {
                     getWeather();
                     animateToTemp();
-                    setAnimateToTimeTimer();
                 } else {
                     animateToTime();
                     setTimeView();
@@ -155,6 +180,12 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
+        setTimeView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initTimeTickerReceiver();
     }
 
@@ -164,12 +195,16 @@ public class FullscreenActivity extends AppCompatActivity {
             dotLayout.setVisibility(View.GONE);
         }
 
-        if(isHours) {
+        if(timeUnit == TimeUnit.HOUR_MINOR) {
             dotLayout = findViewById(R.id.dot_hour_container);
-        } else {
+            startDotAnimation();
+        } else if (timeUnit == TimeUnit.MINUTES_MAJOR){
             dotLayout = findViewById(R.id.dot_minutes_container);
+            startDotAnimation();
         }
+    }
 
+    private void startDotAnimation() {
         dotLayout.setVisibility(View.VISIBLE);
         dotLayout.setAlpha(1);
 
@@ -183,16 +218,12 @@ public class FullscreenActivity extends AppCompatActivity {
         alphaAnimator.start();
     }
 
-    private void setAnimateToTimeTimer() {
-
-    }
-
     private void animateToTemp() {
 
-        mainContentLayout.animate().translationY(400f).scaleX(0.3f).scaleY(0.3f).setInterpolator(new FastOutSlowInInterpolator()).setDuration(500).setListener(new Animator.AnimatorListener() {
+        mainContentLayout.animate().translationY(400f).scaleX(0.2f).scaleY(0.2f).setInterpolator(new FastOutSlowInInterpolator()).setDuration(500).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                dotLayout.setVisibility(View.GONE);
+                if(dotLayout!=null) dotLayout.setVisibility(View.GONE);
             }
 
             @Override
@@ -224,7 +255,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                dotLayout.setVisibility(View.VISIBLE);
+                if(dotLayout!=null) dotLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -312,14 +343,44 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     private void setTimeView() {
-        if(isHours) {
-            int hours = LocalTime.now().getHour();
-            timeView.setText(String.valueOf(hours), true);
-        }
-        else {
-            int minutes = LocalTime.now().getMinute();
-            if(minutes<10) timeView.setText("0" + String.valueOf(minutes), true);
-            else  timeView.setText(String.valueOf(minutes), true);
+        if(timeUnit==TimeUnit.HOUR_MAJOR) {
+            int timeValue = LocalTime.now().getHour();
+
+            if(timeValue<10) {
+                timeView.setText("0", true);
+            }
+            else {
+                String hourMajorValue =  String.valueOf(timeValue).substring(0,1);
+                timeView.setText(hourMajorValue, true);
+            }
+        } else if(timeUnit==TimeUnit.HOUR_MINOR) {
+            int timeValue = LocalTime.now().getHour();
+
+            if(timeValue<10) {
+                String hourMinorValue =  String.valueOf(timeValue);
+                timeView.setText(hourMinorValue, true);
+            }
+            else {
+                String minuteMinorValue =  String.valueOf(timeValue).substring(1,2);
+                timeView.setText(minuteMinorValue, true);
+            }
+        } else if(timeUnit==TimeUnit.MINUTES_MAJOR) {
+            int timeValue = LocalTime.now().getMinute();
+            if(timeValue<10) {
+                timeView.setText("0", true);
+            } else{
+                String minuteMinorValue =  String.valueOf(timeValue).substring(0,1);
+                timeView.setText(minuteMinorValue, true);
+            }
+        }else if(timeUnit==TimeUnit.MINUTES_MINOR) {
+            int timeValue = LocalTime.now().getMinute();
+            if(timeValue<10) {
+                String minuteMinorValue =  String.valueOf(timeValue);
+                timeView.setText(minuteMinorValue, true);
+            } else{
+                String minuteMinorValue =  String.valueOf(timeValue).substring(1,2);
+                timeView.setText(minuteMinorValue, true);
+            }
         }
     }
 

@@ -10,41 +10,6 @@
     android:id="@+id/fullscreen_content"
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        >
-
-        <Button
-            android:id="@+id/hour_enable_button"
-            android:text="HH"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:textColor="@color/colorAccent"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textColor="@color/colorAccent"
-            />
-
-        <Button
-            android:id="@+id/minutes_enable_button"
-            android:text="MM"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:textColor="@color/colorAccent"
-            />
-
-    </LinearLayout>
 
     <ImageButton
         android:id="@+id/unit_selector"
@@ -75,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="-300dp"
+        android:layout_marginEnd="-1200dp"
         >
 
         <com.robinhood.ticker.TickerView
@@ -84,10 +49,26 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textColor="@color/colorAccent"
+            android:textSize="600dp"
+            app:ticker_animationDuration="3000"
+            android:text="2"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingStart="20dp"
+
+            />
+
+        <com.robinhood.ticker.TickerView
+            android:id="@+id/two_unit_time_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorAccent"
             android:textSize="268dp"
-            app:ticker_animationDuration="2000"
+            app:ticker_animationDuration="3000"
             android:text="23"
             android:fontFamily="sans-serif-condensed"
+            android:visibility="gone"
             />
 
         <TextView
@@ -95,12 +76,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="°C"
-            android:textSize="120dp"
+            android:textSize="300dp"
             android:textColor="@color/colorAccent"
             android:layout_toEndOf="@id/time_view"
             android:visibility="gone"
-            android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
+            android:maxLines="1"
             />
 
     </RelativeLayout>
@@ -108,11 +89,11 @@
     <LinearLayout
         android:id="@+id/dot_hour_container"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="600dp"
         android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="-10dp"
+        android:layout_marginEnd="-16dp"
         android:gravity="center_vertical"
         android:visibility="gone"
         >
@@ -120,25 +101,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/clock_dot"
-            android:layout_marginBottom="48dp"
+            android:paddingBottom="100dp"
+            android:paddingTop="40dp"
             />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/clock_dot"
-            android:layout_marginTop="48dp"
+            android:paddingTop="100dp"
             />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/dot_minutes_container"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="600dp"
         android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="-10dp"
+        android:layout_marginStart="-16dp"
         android:gravity="center_vertical"
         android:visibility="gone"
         >
@@ -146,14 +128,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/clock_dot"
-            android:layout_marginBottom="48dp"
+            android:paddingBottom="100dp"
+            android:paddingTop="40dp"
             />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/clock_dot"
-            android:layout_marginTop="48dp"
+            android:paddingTop="100dp"
             />
     </LinearLayout>
 
@@ -189,6 +172,61 @@
             android:layout_width="220dp"
             android:layout_height="220dp"
             android:tint="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <Button
+            android:id="@+id/hour_major_enable_button"
+            android:text="H"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            />
+
+        <Button
+            android:id="@+id/hour_minor_enable_button"
+            android:text="H"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/colorAccent"
+            />
+
+        <Button
+            android:id="@+id/minutes_major_enable_button"
+            android:text="M"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
+            />
+
+        <Button
+            android:id="@+id/minutes_minor_enable_button"
+            android:text="M"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorAccent"
             />
 
     </LinearLayout>
